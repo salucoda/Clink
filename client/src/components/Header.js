@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { NavLink } from "react-router-dom"
 
-const SideBar = () => {
+const Header = () => {
     return(
         <div>
             <NavLink to="/">
@@ -19,4 +19,4 @@ const SideBar = () => {
     )
 }
 
-export default SideBar;
+export default Header;

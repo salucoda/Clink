@@ -1,7 +1,7 @@
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import GlobalStyles from "./GlobalStyles";
 import styled from "styled-components";
-import SideBar from "./SideBar";
+import Header from "./Header";
 import RecipeDetails from "./RecipeDetails";
 import SearchPage from "./SearchPage";
 import SavedRecipes from "./SavedRecipes";
@@ -13,7 +13,7 @@ const App = () => {
       <div>
         <GlobalStyles />
         <Router>
-        <SideBar />
+        <Header />
         <Switch>
 
           <Route exact path="/">
