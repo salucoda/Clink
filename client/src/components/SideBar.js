@@ -1,9 +1,20 @@
 import styled from "styled-components";
+import { NavLink } from "react-router-dom"
 
 const SideBar = () => {
     return(
         <div>
-            <h1>Sidebar</h1>
+            <NavLink to="/">
+                <div>Find a recipe</div>
+            </NavLink>
+
+            <NavLink to="/saved-recipes">
+                <div>Saved recipes</div>
+            </NavLink>
+
+            <NavLink to="/sign-in">
+                <div>Sign in</div>
+            </NavLink>
         </div>
     )
 }
