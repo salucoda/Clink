@@ -6,6 +6,7 @@ const port = 8000
 //importing handler functions
 const {
     getSavedRecipes,
+    createUser,
 } = require("./handlers.js");
 
 app.use(function(req, res, next) {
@@ -32,6 +33,9 @@ app.use('/', express.static(__dirname + '/'));
 
 //GET all the recipes a user has saved
 app.get("/get-saved-recipes", getSavedRecipes);
+
+//POST to add a user to the database
+app.post("/create-user", createUser);
 
 // Catch all
 app.get('*', (req, res) => {
