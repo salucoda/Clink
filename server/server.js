@@ -3,6 +3,11 @@ const morgan = require('morgan');
 const app = express()
 const port = 8000
 
+//importing handler functions
+const {
+    getSavedRecipes,
+} = require("./handlers.js");
+
 app.use(function(req, res, next) {
     res.header(
         'Access-Control-Allow-Methods',
@@ -25,10 +30,9 @@ app.use('/', express.static(__dirname + '/'));
 // Endpoints
 //******************************
 
-//test
-app.get("/hi", (req, res) => {
-    res.status(200).json({status: 200, message: "success"})
-})
+//GET all the recipes a user has saved
+app.get("/get-saved-recipes", getSavedRecipes);
+
 // Catch all
 app.get('*', (req, res) => {
     res.status(404).json({
