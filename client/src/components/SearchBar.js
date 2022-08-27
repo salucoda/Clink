@@ -46,20 +46,23 @@ const SearchBar = () => {
         
         <>
         <StyledDiv>
-        <input
-            className='inputTag'
-            type='text'
-            placeholder="Enter an ingredient..."
-            value={value}
-            onChange={(ev) => setValue(ev.target.value)}
-            onKeyDown={(ev) => {
-                if (ev.key === 'Enter') {
-                    handleSearch();
-                }
-            }}
-            />
-            <StyledSearchIcon />
-            <div>
+            <div className="search">
+                <input
+                    className='inputTag'
+                    type='text'
+                    placeholder="Enter an ingredient..."
+                    value={value}
+                    onChange={(ev) => setValue(ev.target.value)}
+                    onKeyDown={(ev) => {
+                        if (ev.key === 'Enter') {
+                            handleSearch();
+                        }
+                    }}
+                    />
+                <StyledSearchIcon />
+            </div>
+
+            <div className="results">
 
                 {recipes && recipes.map((recipe) => {
                     return (
@@ -74,33 +77,37 @@ const SearchBar = () => {
     )
 }
 const StyledDiv = styled.div`
+    padding-top: 15vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #f9cc67;
+
     .inputTag{
-        border: lightgray solid 1px;
-        border-radius: 2px;
-        height: 32px;
-        width: 250px;
+        border: black solid 2px;
+        border-radius: 20px;
+        height: 20px;
+        width: 300px;
         padding: 10px;
+        background: transparent; 
 
         &:focus {
-            outline: rgb(1 75 247 / 37%) solid 2px;
+            outline: none;
         }
 
-    } `
-
-// const StyledResults = styled.div`
-//     margin-top: 5px;
-//     width: 300px;
-//     height: 200px;
-//     background-color: rgb(255, 255, 255 / 37%);
-//     box-shadow: rgb(0,0,0,0.35) 0px 5px 15px;
-//     overflow: hidden;
-//     overflow-y: auto;
-
-//     &::-webkit-scrollbar {
-//         display: none;
-//     }
-// `
-
+    } 
+    
+    .results{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto auto auto;
+    grid-gap: 3vh;
+    padding:1vw;
+    grid-column-start: span 2;
+    /* background-color: #f9cc67; */
+}
+    `
 
 const StyledSearchIcon = styled(BsSearch)`
     padding:0.7vw;
