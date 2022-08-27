@@ -21,14 +21,12 @@ const Header = () => {
         }
     }, [isAuthenticated])
 
-    console.log(isAuthenticated)
-
     if (isLoading) {
         return <div>Loading...</div>;
     }
 
     return(
-        <div>
+        <MainDiv>
             <NavLink to="/">
                 <div>Find a recipe</div>
             </NavLink>
@@ -47,8 +45,14 @@ const Header = () => {
                     <h2> Hello {user.name}</h2>
                 </div>
             )}
-        </div>
+        </MainDiv>
     )
 }
 
+const MainDiv = styled.div`
+    display: flex;
+    flex-direction: row;
+    border: solid red 2px;
+    height: 10vh;
+`
 export default Header;

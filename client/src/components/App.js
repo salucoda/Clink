@@ -6,6 +6,7 @@ import RecipeDetails from "./RecipeDetails";
 import SearchPage from "./SearchPage";
 import SavedRecipes from "./SavedRecipes";
 import SignIn from "./SignIn";
+import Footer from "./Footer";
 
 const App = () => {
 
@@ -33,6 +34,7 @@ const App = () => {
           </Route>
           
         </Switch>
+        <Footer />
         </Router>
       </div>
     )
