@@ -3,6 +3,12 @@ import { createGlobalStyle } from 'styled-components';
     export default createGlobalStyle`
     *,
 
+    :root {
+        --font-header-option-one: 'Dela Gothic One', cursive;
+        --font-header-option-two: 'Russo One', sans-serif;
+        --font-body: 'IBM Plex Mono', monospace;
+    }
+
     html, body {
         max-width: 100vw;
     }

@@ -3,7 +3,9 @@ import { useState, useEffect } from "react";
 import RecipeCard from "./RecipeCard";
 import {BsSearch} from "react-icons/bs";
 import { NavLink } from "react-router-dom";
+import {CgSmileSad} from "react-icons/cg";
 //set up error catch
+//use asparagus example
 const SearchBar = () => {
     const [value, setValue] = useState("");
     const [recipes, setRecipes] = useState(null);
@@ -21,11 +23,8 @@ const SearchBar = () => {
         fetch(`https://tasty.p.rapidapi.com/recipes/list?from=0&size=100&tags=drinks&q=${value}`, options)
             .then(response => response.json())
             .then(response => {
-                console.log(response)
-                    let goodRecipes = response.results.filter((recipe) => {
-                    return recipe.sections.length <= 1
-                });
-                setRecipes(goodRecipes)
+                    console.log(response)
+                        setRecipes(response.results)
             })
             .catch(err => console.error(err));
     }
@@ -64,15 +63,26 @@ const SearchBar = () => {
 
             <div className="results">
 
-                {recipes && recipes.map((recipe) => {
+                {recipes && recipes.filter((recipe) => {
+                    return recipe && recipe.sections && recipe.sections.length <= 1
+                }).map((recipe) => {
                     return (
-                        <NavigationLink to={`/recipe/${recipe.id}`}>
-                            <RecipeCard name={recipe.name} image={recipe.thumbnail_url} description={recipe.description}/>
-                        </NavigationLink>
-                    )
+                            <>
+                                <NavigationLink to={`/recipe/${recipe.id}`}>
+                                    <RecipeCard name={recipe.name} image={recipe.thumbnail_url} description={recipe.description}/>
+                                </NavigationLink>
+                            </> 
+                        )
                 })}
+
             </div>
+        {error &&
+        <div className="errordiv">
+            <p className="error">Sorry, no recipes with this ingredient. Please check your spelling and try again.<CgSmileSad className="sadlogo" size={50}/></p>
+        </div>
+        }
         </StyledDiv>
+
         </>
     )
 }
@@ -91,9 +101,16 @@ const StyledDiv = styled.div`
         width: 300px;
         padding: 10px;
         background: transparent; 
+        font-family: var(--font-body);
+        font-weight: bold;
 
         &:focus {
             outline: none;
+        }
+
+        &::placeholder{
+            color: black;
+            opacity: 0.5;
         }
 
     } 
@@ -107,6 +124,22 @@ const StyledDiv = styled.div`
     grid-column-start: span 2;
     /* background-color: #f9cc67; */
 }
+
+    .errordiv{
+        width: 400px;
+        text-align: center;
+        line-height: 30px;
+        padding-top: 140px;
+    }
+
+    .error{
+        font-family: var(--font-body);
+        font-weight: bold;
+    }
+
+    .sadlogo{
+        padding-top: 30px;
+    }
     `
 
 const StyledSearchIcon = styled(BsSearch)`

@@ -29,25 +29,29 @@ const Header = () => {
 
     return(
         <MainDiv>
-            <div className="logo">
-                <GiMartini size={100}/>
-                <h1>CLINK</h1>
+            <NavLink to="/" className="logos">
+                <h1 className="logoname1">CL</h1>
+                <GiMartini size={45}/>
+                <h1 className="logoname2">NK</h1>
+            </NavLink>
+
+            <div className="links">
+                <NavLink to="/">
+                    <p>Find a recipe</p>
+                </NavLink>
+
+                <NavLink to="/saved-recipes">
+                    <p>Saved recipes</p>
+                </NavLink>
+
+                <NavLink to="/sign-in">
+                    <p>Sign in</p>
+                </NavLink>
             </div>
-            <NavLink to="/">
-                <div>Find a recipe</div>
-            </NavLink>
-
-            <NavLink to="/saved-recipes">
-                <div>Saved recipes</div>
-            </NavLink>
-
-            <NavLink to="/sign-in">
-                <div>Sign in</div>
-            </NavLink>
 
             {isAuthenticated && (
                 <div>
-                    <h2> Hello {user.name}</h2>
+                    <p> Hello, {user.name}</p>
                 </div>
             )}
         </MainDiv>
@@ -63,5 +67,28 @@ const MainDiv = styled.div`
     height: 10vh;
     background-color: white; 
     z-index: 100;
+
+    .logoname1{
+        font-family: var(--font-header-option-two);
+        font-size: 50px;
+        margin-right: -8px;
+        margin-top: 9px;
+    }
+
+    .logoname2{
+        font-family: var(--font-header-option-two);
+        font-size: 50px;
+        margin-left: -5px;
+        margin-top: 9px;
+    }
+
+    .logos{
+        display: flex;
+        align-items: center;
+        padding-left: 70px;
+        text-decoration: none;
+        color: black;
+    }
+
 `
 export default Header;

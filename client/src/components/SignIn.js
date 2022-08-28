@@ -4,11 +4,16 @@ import LogoutButton from "./logout";
 
 const SignIn = () => {
     return(
-        <div>
+        <MainDiv>
             <h1>hi from SignIn</h1>
             <LoginButton />
             <LogoutButton />
-        </div>
+        </MainDiv>
     )
 }
+
+const MainDiv = styled.div`
+    margin-top: 20vh;
+`
+
 export default SignIn;
