@@ -35,28 +35,38 @@ const Header = () => {
                 <h1 className="logoname2">NK</h1>
             </NavLink>
 
-            <div className="links">
-                <NavLink to="/">
-                    <p>Find a recipe</p>
-                </NavLink>
+            <div className="everythingelse">
+                <div className="links">
 
-                <NavLink to="/saved-recipes">
-                    <p>Saved recipes</p>
-                </NavLink>
+                    <NavLink to="/">
+                        <StyledButton>find a recipe</StyledButton>
+                    </NavLink>
 
-                <NavLink to="/sign-in">
                     {isAuthenticated ?
-                    <p>Sign out</p>
-                    : <p>Sign in</p>
+                    <NavLink to="/saved-recipes">
+                        <StyledButton>saved recipes</StyledButton>
+                    </NavLink>
+                    :
+                    <NavLink to="/sign-in">
+                        <StyledButton>saved recipes</StyledButton>
+                    </NavLink>
                     }
-                </NavLink>
-            </div>
 
-            {isAuthenticated && (
-                <div>
-                    <p> Hello, {user.name}</p>
+                    <NavLink to="/sign-in">
+                        {isAuthenticated ?
+                        <StyledButton>sign out</StyledButton>
+                        : <StyledButton>sign in</StyledButton>
+                        }
+                    </NavLink>
+
                 </div>
-            )}
+
+                {isAuthenticated && (
+                    <div>
+                        <p className="hello"> hello, {user.name.split(" ")[0]}</p>
+                    </div>
+                )}
+            </div>
         </MainDiv>
     )
 }
@@ -68,7 +78,7 @@ const MainDiv = styled.div`
     width: 100vw;
     flex-direction: row;
     height: 10vh;
-    background-color: white; 
+    background-color: black; 
     z-index: 100;
 
     .logoname1{
@@ -88,10 +98,48 @@ const MainDiv = styled.div`
     .logos{
         display: flex;
         align-items: center;
-        padding-left: 70px;
+        padding-left: 130px;
         text-decoration: none;
-        color: black;
+        color: #f9cc67;
+        font-style: italic;
     }
 
+    .hello{
+        color: #f9cc67;
+        font-family: var(--font-header-option-one);
+        padding-right: 100px;
+        font-size: 26px;
+        font-style: italic;
+    }
+
+    .everythingelse{
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        width: 100vw;
+        
+    }
+
+    .links{
+        padding-right: 50px;
+        display: flex;
+        gap: 12px;
+    }
+`
+const StyledButton = styled.button`
+    font-family: var(--font-body);
+    color: #f9cc67;
+    border: 2px solid #f9cc67;
+    padding: 7px 9px;
+    border-radius: 30px;
+    width: 140px;
+    font-size: 14px;
+    background-color: transparent;
+
+    &:hover{
+        cursor: pointer;
+        background-color: #f9cc67;
+        color: black;
+    }
 `
 export default Header;

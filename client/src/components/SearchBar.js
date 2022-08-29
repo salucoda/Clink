@@ -111,8 +111,8 @@ const StyledDiv = styled.div`
     background-color: #f9cc67;
 
     .inputTag{
-        border: black solid 2px;
-        border-radius: 20px;
+        border: black solid 3px;
+        border-radius: 30px;
         height: 20px;
         width: 300px;
         padding: 10px;

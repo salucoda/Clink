@@ -9,8 +9,15 @@ const SignIn = () => {
         <MainDiv>
             <h1>hi from SignIn</h1>
             {isAuthenticated ?
+            <>
+            <p>Thanks for stopping by!</p>
             <LogoutButton />
-            : <LoginButton />
+            </>
+            : 
+            <>
+            <p>Please log in to gain access to our entire site.</p>
+            <LoginButton />
+            </>
             }
         </MainDiv>
     )
