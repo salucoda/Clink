@@ -37,9 +37,9 @@ import { createGlobalStyle } from 'styled-components';
         display: block;
     }
 
-    ol, ul {
+    /* ol, ul {
         list-style: none;
-    }
+    } */
     blockquote, q {
         quotes: none;
     }

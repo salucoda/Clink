@@ -45,7 +45,10 @@ const Header = () => {
                 </NavLink>
 
                 <NavLink to="/sign-in">
-                    <p>Sign in</p>
+                    {isAuthenticated ?
+                    <p>Sign out</p>
+                    : <p>Sign in</p>
+                    }
                 </NavLink>
             </div>
 

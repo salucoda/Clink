@@ -47,7 +47,56 @@ const createUser = async (req,res) => {
     }
 }
 
+//POST to add recipe to saved recipe database
+
+const addRecipe = async (req,res) => {
+    const {id, name, image} = req.body
+
+    try{
+        await client.connect();
+        const db = client.db("database");
+        const existingRecipe = await db.collection("saved-recipes").findOne({id: Number(id)})
+
+        if (existingRecipe) {
+            throw new Error("This recipe was already added to favorites.")
+        } else {
+            const result = await db.collection("saved-recipes").insertOne({id, name, image});
+            res.status(201).json({ status: 201, message: "success", data: result}); 
+        }
+        client.close();
+    } catch (err) {
+        res.status(404).json({ status: 404, message: err.message });
+        client.close();
+    }
+}
+
+//DELETE a recipe from saved recipe database
+
+const removeRecipe = async (req, res) => {
+    const recipeId = req.params.recipeId
+
+    try{
+        await client.connect();
+        const db = client.db("database");
+        const item = await db.collection("saved-recipes").findOne({id: Number(recipeId)});
+
+        if (item === null) {
+            throw new Error(`The recipe with id ${recipeId} does not exist`);
+        }
+
+        const result = await db.collection("saved-recipes").deleteOne({id: item.id});
+        res.status(200).json({ status: "success", data: result});
+
+        client.close();
+    } catch (err) {
+        res.status(400).json({ status: 400, message: err.message});
+        client.close();
+    }
+}
+
 module.exports = {
     getSavedRecipes,
     createUser,
+    addRecipe,
+    removeRecipe,
 }

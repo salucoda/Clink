@@ -1,11 +1,14 @@
 import styled from "styled-components";
+import { NavLink } from "react-router-dom";
 
-const RecipeCard = ({ name, image, description }) => {
+const RecipeCard = ({ name, image, id }) => {
     return(
-        <StyledCard>
-            <img className="img" src={image} alt="drink"/>
-            <p className="name">{name}</p>
-        </StyledCard>
+        <NavigationLink to={`/recipe/${id}`}>
+            <StyledCard>
+                <img className="img" src={image} alt="drink"/>
+                <p className="name">{name}</p>
+            </StyledCard>
+        </NavigationLink>
     )
 }
 
@@ -29,5 +32,8 @@ const StyledCard = styled.div`
         font-size: 18px;
         padding-top: 15px;
     }
+`
+const NavigationLink = styled(NavLink)`
+    text-decoration: none;
 `
 export default RecipeCard;

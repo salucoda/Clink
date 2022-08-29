@@ -4,12 +4,15 @@ import RecipeCard from "./RecipeCard";
 import {BsSearch} from "react-icons/bs";
 import { NavLink } from "react-router-dom";
 import {CgSmileSad} from "react-icons/cg";
+import {CgSmile} from "react-icons/cg";
+
 //set up error catch
 //use asparagus example
 const SearchBar = () => {
     const [value, setValue] = useState("");
     const [recipes, setRecipes] = useState(null);
     const [error, setError ] = useState(false);
+    const [side, setSide] = useState('');
 
     const options = {
         method: 'GET',
@@ -44,6 +47,21 @@ const SearchBar = () => {
     return(
         
         <>
+                <SideDiv>
+                {side ?
+                    <p className="text">cheers to {side}</p>
+                    :
+                    <p className="text"><CgSmile className="iconsmile"/> search to start <CgSmile className="iconsmile"/></p>
+                }
+                </SideDiv>
+
+                <SideDiv2>
+                {side ?
+                    <p className="text">cheers to {side}</p>
+                    :
+                    <p className="text"><CgSmile className="iconsmile"/> search to start <CgSmile className="iconsmile"/></p>
+                }
+                </SideDiv2>
         <StyledDiv>
             <div className="search">
                 <input
@@ -55,12 +73,12 @@ const SearchBar = () => {
                     onKeyDown={(ev) => {
                         if (ev.key === 'Enter') {
                             handleSearch();
+                            setSide(ev.target.value);
                         }
                     }}
                     />
                 <StyledSearchIcon />
             </div>
-
             <div className="results">
 
                 {recipes && recipes.filter((recipe) => {
@@ -68,9 +86,7 @@ const SearchBar = () => {
                 }).map((recipe) => {
                     return (
                             <>
-                                <NavigationLink to={`/recipe/${recipe.id}`}>
-                                    <RecipeCard name={recipe.name} image={recipe.thumbnail_url} description={recipe.description}/>
-                                </NavigationLink>
+                                <RecipeCard name={recipe.name} image={recipe.thumbnail_url} description={recipe.description} id={recipe.id}/>
                             </> 
                         )
                 })}
@@ -116,13 +132,12 @@ const StyledDiv = styled.div`
     } 
     
     .results{
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: auto auto auto;
-    grid-gap: 3vh;
     padding:1vw;
-    grid-column-start: span 2;
-    /* background-color: #f9cc67; */
+    display: flex;
+    width: 1200px;
+    flex-wrap: wrap;
+    justify-content: center;
+
 }
 
     .errordiv{
@@ -148,7 +163,59 @@ const StyledSearchIcon = styled(BsSearch)`
     left: -2.5vw;
     top:1.6vh;
 `
-const NavigationLink = styled(NavLink)`
-    text-decoration: none;
+const SideDiv = styled.div`
+    transform: rotate(-0.25turn);
+    /* border: solid 2px red; */
+    position: fixed;
+    width: 800px;
+    height: 200px;
+    top: 50%;
+    left: 50%;
+    text-align: center;
+    margin-top: -90px; /* Negative half of height. */
+    margin-left: -1250px; /* Negative half of width. */
+    z-index: 100;
+
+    .text{
+        font-size: 70px;
+        font-family: var(--font-header-option-two);
+        font-style: italic;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .iconsmile{
+        margin-left: 20px;
+        margin-right: 20px;
+    }
 `
+const SideDiv2 = styled.div`
+    transform: rotate(0.25turn);
+    /* border: solid 2px red; */
+    position: fixed;
+    width: 800px;
+    height: 200px;
+    bottom: 50%;
+    right: 1%;
+    text-align: center;
+    margin-bottom: -115px; /* Negative half of height. */
+    margin-right: -310px; /* Negative half of width. */
+    z-index: 100;
+
+    .text{
+        font-size: 70px;
+        font-family: var(--font-header-option-two);
+        font-style: italic;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .iconsmile{
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+`
+
 export default SearchBar;

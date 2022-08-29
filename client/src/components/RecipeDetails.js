@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import AddToFavsBtn from "./AddToFavsBtn";
 
 const RecipeDetails = () => {
     const {recipeId} = useParams();
@@ -28,6 +29,7 @@ const RecipeDetails = () => {
         recipeDeet &&
         <MainDiv>
             <h1>{recipeDeet.name}</h1>
+            <AddToFavsBtn id={recipeDeet.id} name={recipeDeet.name} image={recipeDeet.thumbnail_url} />
             <img src={recipeDeet.thumbnail_url} alt="drink" />
             <p>Servings: {recipeDeet.num_servings}</p>
             <p>{recipeDeet.description}</p>
@@ -47,7 +49,7 @@ const RecipeDetails = () => {
 
             <div className="instructions">
                 <p>Instructions:</p>
-                <ul>
+                <ol>
                     {recipeDeet.instructions.map((instruction) => {
                         return(
                             <li>
@@ -55,7 +57,7 @@ const RecipeDetails = () => {
                             </li>
                         )
                     })}
-                </ul>
+                </ol>
             </div>
         </MainDiv>
     )

@@ -7,6 +7,8 @@ const port = 8000
 const {
     getSavedRecipes,
     createUser,
+    addRecipe,
+    removeRecipe,
 } = require("./handlers.js");
 
 app.use(function(req, res, next) {
@@ -36,6 +38,12 @@ app.get("/get-saved-recipes", getSavedRecipes);
 
 //POST to add a user to the database
 app.post("/create-user", createUser);
+
+//POST to add a recipe to the saved recipe database 
+app.post("/add-recipe", addRecipe);
+
+//DELETE a recipe from saved recipe database by id
+app.delete("/remove-recipe/:recipeId", removeRecipe);
 
 // Catch all
 app.get('*', (req, res) => {
