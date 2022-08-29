@@ -108,7 +108,7 @@ const StyledDiv = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #f9cc67;
+    background-color: var(--color-yellow);
 
     .inputTag{
         border: black solid 3px;
@@ -165,15 +165,14 @@ const StyledSearchIcon = styled(BsSearch)`
 `
 const SideDiv = styled.div`
     transform: rotate(-0.25turn);
-    /* border: solid 2px red; */
     position: fixed;
     width: 800px;
     height: 200px;
     top: 50%;
     left: 50%;
     text-align: center;
-    margin-top: -90px; /* Negative half of height. */
-    margin-left: -1250px; /* Negative half of width. */
+    margin-top: -90px;
+    margin-left: -1250px;
     z-index: 100;
 
     .text{
@@ -192,15 +191,14 @@ const SideDiv = styled.div`
 `
 const SideDiv2 = styled.div`
     transform: rotate(0.25turn);
-    /* border: solid 2px red; */
     position: fixed;
     width: 800px;
     height: 200px;
     bottom: 50%;
     right: 1%;
     text-align: center;
-    margin-bottom: -115px; /* Negative half of height. */
-    margin-right: -310px; /* Negative half of width. */
+    margin-bottom: -115px;
+    margin-right: -310px;
     z-index: 100;
 
     .text{

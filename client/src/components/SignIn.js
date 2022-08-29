@@ -7,7 +7,7 @@ const SignIn = () => {
     const { user, isAuthenticated, isLoading } = useAuth0();
     return(
         <MainDiv>
-            <h1>hi from SignIn</h1>
+            
             {isAuthenticated ?
             <>
             <p>Thanks for stopping by!</p>
@@ -24,7 +24,9 @@ const SignIn = () => {
 }
 
 const MainDiv = styled.div`
-    margin-top: 20vh;
+    padding-top: 15vh;
+    height: 85vh;
+    background-color: var(--color-red);
 `
 
 export default SignIn;

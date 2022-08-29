@@ -100,7 +100,7 @@ const MainDiv = styled.div`
         align-items: center;
         padding-left: 130px;
         text-decoration: none;
-        color: #f9cc67;
+        color: var(--color-yellow);
         font-style: italic;
     }
 
@@ -128,8 +128,8 @@ const MainDiv = styled.div`
 `
 const StyledButton = styled.button`
     font-family: var(--font-body);
-    color: #f9cc67;
-    border: 2px solid #f9cc67;
+    color: var(--color-yellow);
+    border: 2px solid var(--color-yellow);
     padding: 7px 9px;
     border-radius: 30px;
     width: 140px;
@@ -138,7 +138,7 @@ const StyledButton = styled.button`
 
     &:hover{
         cursor: pointer;
-        background-color: #f9cc67;
+        background-color: var(--color-yellow);
         color: black;
     }
 `

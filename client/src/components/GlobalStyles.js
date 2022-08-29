@@ -7,6 +7,11 @@ import { createGlobalStyle } from 'styled-components';
         --font-header-option-one: 'Dela Gothic One', cursive;
         --font-header-option-two: 'Russo One', sans-serif;
         --font-body: 'IBM Plex Mono', monospace;
+        --color-yellow: #f9cc67;
+        --color-green: #a8c686;
+        --color-purple: #9b99d0;
+        --color-pink: #f5c6dc;
+        --color-red: #f1a198;
     }
 
     html, body {

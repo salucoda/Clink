@@ -30,20 +30,17 @@ const SavedRecipes = () => {
 }
 
 const MainDiv = styled.div`
-    padding-top: 20vh;
+    padding-top: 15vh;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    height: 85vh;
+    background-color: var(--color-purple);
+
     .results{
-    /* display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: auto auto auto;
-    grid-gap: 3vh;
-    padding:1vw;
-    grid-column-start: span 2; */
     display: flex;
-    border: solid 2px red;
+    /* border: solid 2px red; */
     width: 900px;
     flex-wrap: wrap;
     justify-content: center;

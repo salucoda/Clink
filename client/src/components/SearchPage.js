@@ -10,7 +10,7 @@ const SearchPage = () => {
 }
 
 const MainDiv = styled.div`
-    background-color: #f9cc67; 
+    background-color: var(--color-yellow);
     height: 100vh;
 `
 export default SearchPage;

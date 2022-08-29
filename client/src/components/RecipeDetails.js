@@ -29,9 +29,13 @@ const RecipeDetails = () => {
         recipeDeet &&
         <MainDiv>
             <h1>{recipeDeet.name}</h1>
+
             <AddToFavsBtn id={recipeDeet.id} name={recipeDeet.name} image={recipeDeet.thumbnail_url} />
-            <img src={recipeDeet.thumbnail_url} alt="drink" />
+
+            <img className="img" src={recipeDeet.thumbnail_url} alt="drink" />
+
             <p>Servings: {recipeDeet.num_servings}</p>
+
             <p>{recipeDeet.description}</p>
 
             <div className="ingredients">
@@ -64,6 +68,12 @@ const RecipeDetails = () => {
 }
 
 const MainDiv = styled.div`
-    padding-top: 20vh;
+    padding-top: 15vh;
+    background-color: var(--color-green);
+    height: 85vh;
+
+    .img{
+        width: 100px;
+    }
 `
 export default RecipeDetails;
