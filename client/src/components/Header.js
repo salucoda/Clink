@@ -66,7 +66,7 @@ const Header = () => {
 
     return(
         <MainDiv>
-            <NavLink to="/" className="logos">
+            <NavLink to={"/"} className="logos">
                 <h1 className="logoname1">CL</h1>
                 <GiMartini size={45}/>
                 <h1 className="logoname2">NK</h1>
@@ -74,10 +74,6 @@ const Header = () => {
 
             <div className="everythingelse">
                 <div className="links">
-
-                    <NavLink to="/">
-                        <StyledButton>find a recipe</StyledButton>
-                    </NavLink>
 
                     {isAuthenticated ?
                     <NavLink to="/saved-recipes">
@@ -98,6 +94,14 @@ const Header = () => {
                             </div>
                         </Modal>
                     </div>
+                    }
+                    
+                    {isAuthenticated ?
+                    <NavLink to="/preferences">
+                    <StyledButton>preferences</StyledButton>
+                    </NavLink>
+                    :
+                    <StyledButton onClick={openModal}>preferences</StyledButton>
                     }
 
                         {isAuthenticated ?

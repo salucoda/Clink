@@ -99,9 +99,54 @@ const removeRecipe = async (req, res) => {
     }
 }
 
+//PATCH to update user database with preferences
+
+const addPreferences = async (req, res) => {
+    const {email, bio, allergy, restriction, nickname, pronouns, age, favdrink} = req.body
+
+    try{
+        await client.connect();
+        const db = client.db("database");
+        const currentUser = await db.collection("user").findOne({email: email});
+
+        if (currentUser) {
+            const result = await db.collection("user").updateOne({email: email}, { $set: {"user.bio": bio, "user.allergy": allergy, "user.restriction": restriction, "user.pronouns": pronouns, "user.nickname": nickname, "user.age": age, "user.favdrink": favdrink}});
+
+            res.status(200).json({ status: 200, message: "success", data: result});
+            client.close();
+        } else {
+            throw new Error("This user does not exist.");
+        }
+
+    } catch (err) {
+        res.status(404).json({ status: 404, message: err.message });
+        client.close();
+    }
+}
+
+//GET to get all user info by email
+
+const getUserInfo = async (req, res) => {
+    const userEmail = req.params.userEmail;
+
+    try{
+        await client.connect();
+        const db = client.db("database");
+        const result = await db.collection("user").findOne({email: userEmail});
+
+        res.status(200).json({ status: 200, data: result});
+        client.close();
+
+    } catch (err) {
+        res.status(404).json({ status: 404, message: err.message});
+        client.close();
+    }
+}
 module.exports = {
     getSavedRecipes,
     createUser,
     addRecipe,
     removeRecipe,
+    addPreferences,
+    getUserInfo,
 }

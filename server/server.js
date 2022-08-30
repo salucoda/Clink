@@ -9,6 +9,8 @@ const {
     createUser,
     addRecipe,
     removeRecipe,
+    addPreferences,
+    getUserInfo,
 } = require("./handlers.js");
 
 app.use(function(req, res, next) {
@@ -45,6 +47,13 @@ app.post("/add-recipe", addRecipe);
 //DELETE a recipe from saved recipe database by id
 app.delete("/remove-recipe/:recipeId", removeRecipe);
 
+//PATCH to update user database with allergies/restrictions
+app.patch("/add-preferences", addPreferences);
+
+//GET to get specific user info based on email
+app.get("/get-user-info/:userEmail", getUserInfo);
+
+//*******************************
 // Catch all
 app.get('*', (req, res) => {
     res.status(404).json({

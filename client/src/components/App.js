@@ -7,6 +7,7 @@ import SearchPage from "./SearchPage";
 import SavedRecipes from "./SavedRecipes";
 import ProfilePage from "./ProfilePage";
 import Footer from "./Footer";
+import Preferences from "./Preferences";
 
 const App = () => {
 
@@ -27,6 +28,10 @@ const App = () => {
 
           <Route exact path="/saved-recipes">
             <SavedRecipes />
+          </Route>
+
+          <Route exact path="/preferences">
+            <Preferences />
           </Route>
 
           <Route exact path="/recipe/:recipeId">
