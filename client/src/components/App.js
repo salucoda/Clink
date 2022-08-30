@@ -5,7 +5,7 @@ import Header from "./Header";
 import RecipeDetails from "./RecipeDetails";
 import SearchPage from "./SearchPage";
 import SavedRecipes from "./SavedRecipes";
-import SignIn from "./SignIn";
+import ProfilePage from "./ProfilePage";
 import Footer from "./Footer";
 
 const App = () => {
@@ -21,8 +21,8 @@ const App = () => {
             <SearchPage />
           </Route>
 
-          <Route exact path="/sign-in">
-            <SignIn />
+          <Route exact path="/profile">
+            <ProfilePage />
           </Route>
 
           <Route exact path="/saved-recipes">

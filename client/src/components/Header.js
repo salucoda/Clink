@@ -3,15 +3,50 @@ import { NavLink } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect, useState, useContext } from "react";
 import {GiMartini} from "react-icons/gi";
-import { CurrentColorContext } from "./CurrentColorContext"
+import { CurrentColorContext } from "./CurrentColorContext";
+import React from "react";
+import Modal from "react-modal";
 
+const customStyles = {
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+        padding: '50px',
+        width: '400px',
+        height: '190px',
+        'border-radius': '60px',
+        'background-color': 'black',
+        color: '#f5c6dc',
+        'font-family': 'IBM Plex Mono',
+        display: 'flex',
+        'justify-content': 'center',
+        'align-items': 'center',
+        'font-size': '25px',
+        'text-align': 'center',
+        'border': 'solid 5px #f5c6dc',
+    },
+};
 
 const Header = () => {
     const { user, isAuthenticated, isLoading } = useAuth0();
     const { currentColor, setCurrentColor } = useContext(CurrentColorContext);
+    const { logout } = useAuth0();
+    const { loginWithRedirect } = useAuth0();
+    const [modalIsOpen, setIsOpen] = useState(false);
+
+    const openModal = () => {
+        setIsOpen(true)
+    }
+
+    const closeModal = () => {
+        setIsOpen(false)
+    }
 
     useEffect(() => {
-        // console.log(isAuthenticated)
         if(isAuthenticated){
             fetch("/create-user", {
                 method: "POST",
@@ -49,24 +84,33 @@ const Header = () => {
                         <StyledButton>saved recipes</StyledButton>
                     </NavLink>
                     :
-                    <NavLink to="/sign-in">
-                        <StyledButton>saved recipes</StyledButton>
-                    </NavLink>
+                    <div>
+                        <StyledButton onClick={openModal}>saved recipes</StyledButton>
+                        <Modal 
+                        isOpen={modalIsOpen}
+                        onRequestClose={closeModal}
+                        style={customStyles}
+                        contentLabel="Please Login Modal"
+                        >
+                            <div className="modaldiv">
+                            <StyledPTag>Please sign-in to use this feature!</StyledPTag>
+                            <CloseButn onClick={closeModal}>close</CloseButn>
+                            </div>
+                        </Modal>
+                    </div>
                     }
 
-                    <NavLink to="/sign-in">
                         {isAuthenticated ?
-                        <StyledButton>sign out</StyledButton>
-                        : <StyledButton>sign in</StyledButton>
+                        <StyledButton onClick={() => logout({ returnTo: window.location.origin })}>sign out</StyledButton>
+                        : <StyledButton onClick={() => loginWithRedirect()}>sign in</StyledButton>
                         }
-                    </NavLink>
 
                 </div>
 
                 {isAuthenticated && (
-                    <div>
+                    <NavLink className="navclass" to="/profile">
                         <p className="hello"> hello, {user.name.split(" ")[0]}</p>
-                    </div>
+                    </NavLink>
                 )}
             </div>
         </MainDiv>
@@ -112,6 +156,11 @@ const MainDiv = styled.div`
         padding-right: 100px;
         font-size: 26px;
         font-style: italic;
+        text-decoration: none;
+    }
+
+    .navclass{
+        text-decoration: none;
     }
 
     .everythingelse{
@@ -143,5 +192,29 @@ const StyledButton = styled.button`
         background-color: var(--color-yellow);
         color: black;
     }
+`
+
+const CloseButn = styled.button`
+    width: 80px;
+    height: 30px;
+    margin-top: 40px;
+    background-color: transparent;
+    color: var(--color-pink);
+    border: solid 1px var(--color-pink);
+    font-family: var(--font-body);
+    border-radius: 30px;
+    font-size: 14px;
+    margin-left: 320px;
+    margin-top: 60px;
+
+    &:hover{
+        cursor: pointer;
+        background-color: var(--color-pink);
+        color: black;
+    }
+`
+const StyledPTag = styled.p`
+    margin-top: 60px;
+    margin-bottom: -30px;
 `
 export default Header;

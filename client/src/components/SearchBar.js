@@ -6,8 +6,6 @@ import { NavLink } from "react-router-dom";
 import {CgSmileSad} from "react-icons/cg";
 import {CgSmile} from "react-icons/cg";
 
-//set up error catch
-//use asparagus example
 const SearchBar = () => {
     const [value, setValue] = useState("");
     const [recipes, setRecipes] = useState(null);
