@@ -19,7 +19,7 @@ const RecipeDetails = () => {
         fetch(`https://tasty.p.rapidapi.com/recipes/get-more-info?id=${recipeId}`, options)
             .then(response => response.json())
             .then(response => {
-                console.log(response)
+                // console.log(response)
                 setRecipeDeet(response)
             })
             .catch(err => console.error(err));

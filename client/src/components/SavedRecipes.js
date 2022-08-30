@@ -1,19 +1,16 @@
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import RecipeCard from "./RecipeCard";
+import { useAuth0 } from "@auth0/auth0-react";
+import { CurrentColorContext } from "./CurrentColorContext";
+
 
 const SavedRecipes = () => {
-    const [savedRecipes, setSavedRecipes] = useState(null);
 
-    useEffect(() => {
-        fetch("/get-saved-recipes")
-        .then(res => res.json())
-        .then(data => {
-            console.log(data.data)
-            setSavedRecipes(data.data)
-        })
-    }, [])
+    const { user, isAuthenticated, isLoading } = useAuth0();
+    const { savedRecipes, setSavedRecipes } = useContext(CurrentColorContext);
 
+    console.log(savedRecipes)
     return(
         savedRecipes &&
         <MainDiv>

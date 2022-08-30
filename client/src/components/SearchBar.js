@@ -82,7 +82,7 @@ const SearchBar = () => {
             <div className="results">
 
                 {recipes && recipes.filter((recipe) => {
-                    return recipe && recipe.sections && recipe.sections.length <= 1
+                    return recipe && recipe.sections && recipe.sections.length == 1
                 }).map((recipe) => {
                     return (
                             <>

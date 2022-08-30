@@ -33,8 +33,8 @@ app.use('/', express.static(__dirname + '/'));
 // Endpoints
 //******************************
 
-//GET all the recipes a user has saved
-app.get("/get-saved-recipes", getSavedRecipes);
+//POST all the recipes a user has saved
+app.post("/get-saved-recipes", getSavedRecipes);
 
 //POST to add a user to the database
 app.post("/create-user", createUser);

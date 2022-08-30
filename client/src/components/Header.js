@@ -1,15 +1,17 @@
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import {GiMartini} from "react-icons/gi";
+import { CurrentColorContext } from "./CurrentColorContext"
 
 
 const Header = () => {
     const { user, isAuthenticated, isLoading } = useAuth0();
+    const { currentColor, setCurrentColor } = useContext(CurrentColorContext);
 
     useEffect(() => {
-        console.log("useEffect")
+        // console.log(isAuthenticated)
         if(isAuthenticated){
             fetch("/create-user", {
                 method: "POST",

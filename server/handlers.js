@@ -7,13 +7,15 @@ const {MONGO_URI} = process.env;
 const options = {};
 const client = new MongoClient(MONGO_URI,options);
 
-//gets all the recipes a user has saved
+//posts all the recipes a user has saved
 
 const getSavedRecipes = async (req, res) => {
+    const {email} = req.body;
+
     try{
         await client.connect();
         const db = client.db("database");
-        const result = await db.collection("saved-recipes").find().toArray();
+        const result = await db.collection("saved-recipes").find({email}).toArray();
         res.status(200).json({ status: 200, data: result});
         client.close();
     } catch (err) {
@@ -33,8 +35,10 @@ const createUser = async (req,res) => {
 
         const existingUser = await db.collection("user").findOne({email: user.email})
 
+        const userFavs = await db.collection("saved-recipes").find({ email: user.email }).toArray();
+        console.log(userFavs);
         if(existingUser) {
-            res.status(400).json({ status: 400, message: "user already exists."})
+            res.status(400).json({ status: 400, message: "user already exists.", data: existingUser, fav: userFavs});
         } else {
             const result = await db.collection("user").insertOne({id, user, email: user.email});
             res.status(201).json({ status: 201, message: "success", data: result , id: id});
@@ -50,7 +54,7 @@ const createUser = async (req,res) => {
 //POST to add recipe to saved recipe database
 
 const addRecipe = async (req,res) => {
-    const {id, name, image} = req.body
+    const {id, name, image, email} = req.body
 
     try{
         await client.connect();
@@ -60,7 +64,7 @@ const addRecipe = async (req,res) => {
         if (existingRecipe) {
             throw new Error("This recipe was already added to favorites.")
         } else {
-            const result = await db.collection("saved-recipes").insertOne({id, name, image});
+            const result = await db.collection("saved-recipes").insertOne({id, name, image, email});
             res.status(201).json({ status: 201, message: "success", data: result}); 
         }
         client.close();
@@ -74,11 +78,12 @@ const addRecipe = async (req,res) => {
 
 const removeRecipe = async (req, res) => {
     const recipeId = req.params.recipeId
+    const {email} = req.body
 
     try{
         await client.connect();
         const db = client.db("database");
-        const item = await db.collection("saved-recipes").findOne({id: Number(recipeId)});
+        const item = await db.collection("saved-recipes").findOne({id: Number(recipeId), email: email});
 
         if (item === null) {
             throw new Error(`The recipe with id ${recipeId} does not exist`);
