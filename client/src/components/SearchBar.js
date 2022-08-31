@@ -11,6 +11,12 @@ const SearchBar = () => {
     const [recipes, setRecipes] = useState(null);
     const [error, setError ] = useState(false);
     const [side, setSide] = useState('');
+    const [random, setRandom] = useState(null);
+    const [randomDrinks, setRandomDrinks] = useState([]);
+    const [searched, setSearched] = useState(false);
+
+    let randomIndexes = [];
+    let drinks = [];
 
     const options = {
         method: 'GET',
@@ -42,8 +48,41 @@ const SearchBar = () => {
         }
     }, [recipes])
 
-    return(
+    useEffect(() => {
+        fetch(`https://tasty.p.rapidapi.com/recipes/list?from=0&size=50&tags=drinks`, options)
+            .then(response => response.json())
+            .then(response => {
+                    let properResponse = response.results.filter((recipe) => {
+                    return recipe && recipe.sections && recipe.sections.length == 1
+                })
+                    setRandom(properResponse)
+                    console.log("im fetching")
+            })
+            .catch(err => console.error(err));
+
+        },[])
         
+        useEffect(() => {
+            if(random) {
+                for(let i = 0; i < 8; i++) {
+                    let randomIndex = (Math.floor(Math.random()*random.length));
+                    while(randomIndexes.includes(randomIndex)){
+                        randomIndex = Math.floor(Math.random()*random.length)
+                    }
+                    randomIndexes.push(randomIndex);
+                }
+    
+                randomIndexes.forEach((i) => {
+                    drinks.push(random[i]);
+                })
+            }
+            setRandomDrinks(drinks)
+            console.log(drinks)
+
+        }, [random])
+
+    return(
+
         <>
                 <SideDiv>
                 {side ?
@@ -60,6 +99,7 @@ const SearchBar = () => {
                     <p className="text"><CgSmile className="iconsmile"/> search to start <CgSmile className="iconsmile"/></p>
                 }
                 </SideDiv2>
+
         <StyledDiv>
             <div className="search">
                 <input
@@ -67,18 +107,37 @@ const SearchBar = () => {
                     type='text'
                     placeholder="Enter an ingredient..."
                     value={value}
-                    onChange={(ev) => setValue(ev.target.value)}
+                    onChange={(ev) => {
+                        ev.preventDefault();
+                        ev.stopPropagation();
+                        setValue(ev.target.value)
+                    }}
                     onKeyDown={(ev) => {
                         if (ev.key === 'Enter') {
                             handleSearch();
                             setSide(ev.target.value);
+                            setSearched(true)
                         }
                     }}
                     />
                 <StyledSearchIcon />
             </div>
-            <div className="results">
 
+            {searched == false ? 
+                <>
+                    <p className="drinksTitle">featured drinks</p>
+                    <div className="results">
+                        {randomDrinks && randomDrinks.map((recipe) => {
+                            return(
+                                <>
+                                    <RecipeCard name={recipe.name} image={recipe.thumbnail_url} description={recipe.description} id={recipe.id}/>
+                                </>
+                            )
+                        })}
+                    </div>
+                </>
+            :
+            <div className="results">
                 {recipes && recipes.filter((recipe) => {
                     return recipe && recipe.sections && recipe.sections.length == 1
                 }).map((recipe) => {
@@ -88,8 +147,9 @@ const SearchBar = () => {
                             </> 
                         )
                 })}
-
             </div>
+            }
+
         {error &&
         <div className="errordiv">
             <p className="error">Sorry, no recipes with this ingredient. Please check your spelling and try again.<CgSmileSad className="sadlogo" size={50}/></p>
@@ -101,7 +161,7 @@ const SearchBar = () => {
     )
 }
 const StyledDiv = styled.div`
-    padding-top: 15vh;
+    padding-top: 10vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -152,6 +212,13 @@ const StyledDiv = styled.div`
 
     .sadlogo{
         padding-top: 30px;
+    }
+
+    .drinksTitle{
+        padding-top: 30px;
+        font-size: 35px;
+        font-family: var(--font-header-option-two);
+        margin-right: 40px;
     }
     `
 

@@ -7,7 +7,7 @@ const {MONGO_URI} = process.env;
 const options = {};
 const client = new MongoClient(MONGO_URI,options);
 
-//posts all the recipes a user has saved
+//POST for all the recipes a user has saved
 
 const getSavedRecipes = async (req, res) => {
     const {email} = req.body;
