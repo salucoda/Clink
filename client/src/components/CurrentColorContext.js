@@ -12,7 +12,7 @@ export const CurrentColorProvider = ({ children }) => {
     const { user, isAuthenticated, isLoading } = useAuth0();
 
     useEffect(() => {
-        if (isAuthenticated) {
+        if (isAuthenticated && user) {
 
             fetch("/get-saved-recipes", {
                 method: "POST",

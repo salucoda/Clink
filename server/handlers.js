@@ -110,7 +110,17 @@ const addPreferences = async (req, res) => {
         const currentUser = await db.collection("user").findOne({email: email});
 
         if (currentUser) {
-            const result = await db.collection("user").updateOne({email: email}, { $set: {"user.bio": bio, "user.allergy": allergy, "user.restriction": restriction, "user.pronouns": pronouns, "user.nickname": nickname, "user.age": age, "user.favdrink": favdrink}});
+            const result = await db.collection("user").updateOne({email: email}, 
+                { $set: {
+                    "user.bio": bio !== undefined ? bio : currentUser.user.bio, 
+                    "user.allergy": allergy !== undefined ? allergy : currentUser.user.allergy, 
+                    "user.restriction": restriction !== undefined ? restriction : currentUser.user.restriction, 
+                    "user.pronouns": pronouns !== undefined ? pronouns : currentUser.user.pronouns, 
+                    "user.nickname": nickname !== undefined ? nickname : currentUser.user.nickname, 
+                    "user.age": age !== undefined ? age : currentUser.user.age, 
+                    "user.favdrink": favdrink !== undefined ? favdrink : currentUser.user.favdrink,
+                }}
+                );
 
             res.status(200).json({ status: 200, message: "success", data: result});
             client.close();

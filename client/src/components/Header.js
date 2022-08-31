@@ -28,6 +28,7 @@ const customStyles = {
         'font-size': '25px',
         'text-align': 'center',
         'border': 'solid 5px #f5c6dc',
+        'z-index': '100',
     },
 };
 

@@ -36,7 +36,7 @@ const MainDiv = styled.div`
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 94.47vh;
+    height: 100vh;
     background-color: var(--color-purple);
     overflow: hidden;
     overflow-y: hidden;
@@ -57,6 +57,7 @@ const MainDiv = styled.div`
 const StyledImg = styled.img`
     margin-bottom: -550px;
     width: 600px;
+    position:fixed;
     
 `
 const StyledImg2 = styled.img`

@@ -13,8 +13,7 @@ const RecipeCard = ({ name, image, id }) => {
 }
 
 const StyledCard = styled.div`
-    /* border: solid 1px orange; */
-    padding: 40px;
+    padding: 30px;
     display: flex;
     flex-direction: column;
     width: 10vw;
