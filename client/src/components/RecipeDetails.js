@@ -1,11 +1,13 @@
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext} from "react";
 import AddToFavsBtn from "./AddToFavsBtn";
+import { CurrentColorContext } from "./CurrentColorContext";
 
 const RecipeDetails = () => {
     const {recipeId} = useParams();
     const [recipeDeet, setRecipeDeet] = useState();
+    const { setCurrentColor } = useContext(CurrentColorContext);
 
     const options = {
         method: 'GET',
@@ -16,10 +18,10 @@ const RecipeDetails = () => {
     };
     
     useEffect(() => {
+        setCurrentColor("#a8c686");
         fetch(`https://tasty.p.rapidapi.com/recipes/get-more-info?id=${recipeId}`, options)
             .then(response => response.json())
             .then(response => {
-                // console.log(response)
                 setRecipeDeet(response)
             })
             .catch(err => console.error(err));

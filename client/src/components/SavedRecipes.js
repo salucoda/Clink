@@ -9,7 +9,11 @@ import Waves from "../assets/wavespng.png";
 const SavedRecipes = () => {
 
     const { user, isAuthenticated, isLoading } = useAuth0();
-    const { savedRecipes, setSavedRecipes } = useContext(CurrentColorContext);
+    const { savedRecipes, setCurrentColor } = useContext(CurrentColorContext);
+
+    useEffect(() => {
+        setCurrentColor("#9b99d0");
+    }, [])
 
     return(
         <>

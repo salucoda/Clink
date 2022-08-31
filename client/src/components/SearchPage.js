@@ -1,7 +1,15 @@
+import { useEffect, useContext } from "react";
 import styled from "styled-components";
 import SearchBar from "./SearchBar";
+import { CurrentColorContext } from "./CurrentColorContext";
 
 const SearchPage = () => {
+    const { setCurrentColor } = useContext(CurrentColorContext);
+
+    useEffect(() => {
+        setCurrentColor("#f9cc67");
+    }, [])
+
     return(
         <MainDiv>
             <SearchBar />

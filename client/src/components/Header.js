@@ -34,11 +34,12 @@ const customStyles = {
 
 const Header = () => {
     const { user, isAuthenticated, isLoading } = useAuth0();
-    const { currentColor, setCurrentColor } = useContext(CurrentColorContext);
+    const { currentColor } = useContext(CurrentColorContext);
     const { logout } = useAuth0();
     const { loginWithRedirect } = useAuth0();
     const [modalIsOpen, setIsOpen] = useState(false);
 
+    console.log(currentColor)
     const openModal = () => {
         setIsOpen(true)
     }
@@ -66,7 +67,7 @@ const Header = () => {
     }
 
     return(
-        <MainDiv>
+        <MainDiv color={currentColor}>
             <NavLink to={"/"} className="logos">
                 <h1 className="logoname1">CL</h1>
                 <GiMartini size={45}/>
@@ -78,11 +79,11 @@ const Header = () => {
 
                     {isAuthenticated ?
                     <NavLink to="/saved-recipes">
-                        <StyledButton>saved recipes</StyledButton>
+                        <StyledButton color={currentColor}>saved recipes</StyledButton>
                     </NavLink>
                     :
                     <div>
-                        <StyledButton onClick={openModal}>saved recipes</StyledButton>
+                        <StyledButton color={currentColor} onClick={openModal}>saved recipes</StyledButton>
                         <Modal 
                         isOpen={modalIsOpen}
                         onRequestClose={closeModal}
@@ -99,15 +100,15 @@ const Header = () => {
                     
                     {isAuthenticated ?
                     <NavLink to="/preferences">
-                    <StyledButton>preferences</StyledButton>
+                    <StyledButton color={currentColor} >preferences</StyledButton>
                     </NavLink>
                     :
-                    <StyledButton onClick={openModal}>preferences</StyledButton>
+                    <StyledButton color={currentColor} onClick={openModal}>preferences</StyledButton>
                     }
 
                         {isAuthenticated ?
-                        <StyledButton onClick={() => logout({ returnTo: window.location.origin })}>sign out</StyledButton>
-                        : <StyledButton onClick={() => loginWithRedirect()}>sign in</StyledButton>
+                        <StyledButton color={currentColor} onClick={() => logout({ returnTo: window.location.origin })}>sign out</StyledButton>
+                        : <StyledButton color={currentColor} onClick={() => loginWithRedirect()}>sign in</StyledButton>
                         }
 
                 </div>
@@ -151,12 +152,12 @@ const MainDiv = styled.div`
         align-items: center;
         padding-left: 130px;
         text-decoration: none;
-        color: var(--color-yellow);
+        color: ${(props) => props.color};
         font-style: italic;
     }
 
     .hello{
-        color: #f9cc67;
+        color:${(props) => props.color};
         font-family: var(--font-header-option-one);
         padding-right: 100px;
         font-size: 26px;
@@ -184,8 +185,8 @@ const MainDiv = styled.div`
 `
 const StyledButton = styled.button`
     font-family: var(--font-body);
-    color: var(--color-yellow);
-    border: 2px solid var(--color-yellow);
+    color: ${(props) => props.color};
+    border: 2px solid ${(props) => props.color};
     padding: 7px 9px;
     border-radius: 30px;
     width: 140px;
@@ -194,7 +195,7 @@ const StyledButton = styled.button`
 
     &:hover{
         cursor: pointer;
-        background-color: var(--color-yellow);
+        background-color: ${(props) => props.color};
         color: black;
     }
 `

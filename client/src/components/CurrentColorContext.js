@@ -4,7 +4,8 @@ import { useAuth0 } from "@auth0/auth0-react";
 export const CurrentColorContext = createContext();
 
 export const CurrentColorProvider = ({ children }) => {
-    const [currentColor, setCurrentColor] = useState("#f9cc67");
+    const [currentColor, setCurrentColor] = useState("");
+
     const [savedRecipes, setSavedRecipes] = useState([]);
     const [toggleFavs, setToggleFavs] = useState(false);
     const [load, setLoad] = useState(null);
@@ -24,7 +25,7 @@ export const CurrentColorProvider = ({ children }) => {
             .then(res => res.json())
             .then(data => {
                 console.log(data.data)
-                setSavedRecipes(data.data) //use context
+                setSavedRecipes(data.data)
             })
         }
     }, [isAuthenticated, toggleFavs])

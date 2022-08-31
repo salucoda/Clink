@@ -1,10 +1,17 @@
 import styled from "styled-components";
+import Mountain from "../assets/mountain2.png";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { CurrentColorContext } from "./CurrentColorContext";
 
 const ProfilePage = () => {
     const { user, isAuthenticated, isLoading } = useAuth0();
     const [userInfo, setUserInfo] = useState(null);
+    const { setCurrentColor } = useContext(CurrentColorContext);
+
+    useEffect(() => {
+        setCurrentColor("#f5c6dc");
+    }, []);
 
     useEffect(() => {
         if (isAuthenticated && user){
@@ -20,6 +27,7 @@ const ProfilePage = () => {
     return(
         userInfo &&
         <MainDiv>
+            <img className="png" src={Mountain} />
             {isAuthenticated &&
             <div className="forminfo">
                 <p>nickname: {userInfo.nickname}</p>
@@ -42,6 +50,11 @@ const MainDiv = styled.div`
     padding-top: 15vh;
     height: 85vh;
     background-color: var(--color-pink);
+
+    .png{
+        border-radius: 100%;
+        width: 700px;
+    }
 `
 
 export default ProfilePage;
