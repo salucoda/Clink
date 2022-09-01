@@ -129,7 +129,7 @@ const MainDiv = styled.div`
     display: flex;
     justify-content: center;
     font-family: var(--font-body);
-    font-size: 18px;
+    font-size: 16px;
 
     .png{
         transform: rotate(90deg);

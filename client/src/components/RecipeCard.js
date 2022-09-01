@@ -22,6 +22,7 @@ const StyledCard = styled.div`
         width: 200px;
         height: 200px;
         border-radius: 20px;
+        border: black solid 2px;
     }
 
     .name{
