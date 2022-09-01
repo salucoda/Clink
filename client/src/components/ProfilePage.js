@@ -3,6 +3,7 @@ import Mountain from "../assets/mountain2.png";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect, useState, useContext } from "react";
 import { CurrentColorContext } from "./CurrentColorContext";
+import {IoSparklesSharp} from "react-icons/io5";
 
 const ProfilePage = () => {
     const { user, isAuthenticated, isLoading } = useAuth0();
@@ -28,6 +29,7 @@ const ProfilePage = () => {
         userInfo &&
         <MainDiv>
             <img className="png" src={Mountain} />
+            <IoSparklesSharp size={100}/>
             {isAuthenticated &&
             <div className="forminfo">
                 <p>nickname: {userInfo.nickname}</p>
@@ -54,6 +56,7 @@ const MainDiv = styled.div`
     .png{
         border-radius: 100%;
         width: 700px;
+        border: 1px solid black
     }
 `
 

@@ -20,7 +20,8 @@ const StyledCard = styled.div`
 
     .img{
         width: 200px;
-        border-radius: 15px;
+        height: 200px;
+        border-radius: 20px;
     }
 
     .name{
