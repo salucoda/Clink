@@ -51,8 +51,6 @@ const RecipeDetails = () => {
                             <p className="servings"><span className="bold">Servings:</span> {recipeDeet.num_servings}</p>
 
                             <p>{recipeDeet.description}</p>
-                            
-                            {/* <AddToFavsBtn id={recipeDeet.id} name={recipeDeet.name} image={recipeDeet.thumbnail_url} /> */}
                         </div>
 
                         <div className="right">
@@ -97,7 +95,6 @@ const RecipeDetails = () => {
 }
 
 const MainDiv = styled.div`
-    /* padding-top: 4vh; */
     background-color: var(--color-green);
     height: 100vh;
     display: flex;
@@ -113,13 +110,10 @@ const MainDiv = styled.div`
     }
     
     .contentDiv{
-        /* padding-top: 10.5vh; */
-        /* height: 89.5vh; */
         width: 1000px;
         margin-top: 50px;
-        /* border: solid black 1px; */
         background-color: var(--color-green);
-        z-index: 50;
+        /* z-index: 50; */
     }
     
     .centereddiv{
@@ -128,21 +122,14 @@ const MainDiv = styled.div`
         justify-content: center;
     }
 
-    .left{
-        /* border: solid blue 1px; */
-    }
-
     .right{
         padding-left: 50px;
-        /* border: solid yellow 1px; */
-        /* padding-top: 15px; */
     }
 
     .leftrightcontainer{
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         grid-template-rows: auto auto auto;
-        /* border: solid 2px red; */
         margin-left: 50px;
         
     }
@@ -159,10 +146,6 @@ const MainDiv = styled.div`
         margin-top: 10px;
         font-weight: bold;
         text-decoration: underline;
-    }
-
-    .spaceul{
-        /* margin-bottom: 4px; */
     }
 
     .spaceol{

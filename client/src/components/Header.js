@@ -21,14 +21,14 @@ const customStyles = {
         height: '190px',
         'border-radius': '60px',
         'background-color': 'black',
-        color: '#f5c6dc',
+        color: '#f9cc67',
         'font-family': 'IBM Plex Mono',
         display: 'flex',
         'justify-content': 'center',
         'align-items': 'center',
         'font-size': '25px',
         'text-align': 'center',
-        'border': 'solid 5px #f5c6dc',
+        'border': 'solid 5px #f9cc67',
         'z-index': '100',
     },
 };
@@ -206,8 +206,8 @@ const CloseButn = styled.button`
     height: 30px;
     margin-top: 40px;
     background-color: transparent;
-    color: var(--color-pink);
-    border: solid 1px var(--color-pink);
+    color: var(--color-yellow);
+    border: solid 1px var(--color-yellow);
     font-family: var(--font-body);
     border-radius: 30px;
     font-size: 14px;
@@ -216,7 +216,7 @@ const CloseButn = styled.button`
 
     &:hover{
         cursor: pointer;
-        background-color: var(--color-pink);
+        background-color: var(--color-yellow);
         color: black;
     }
 `
