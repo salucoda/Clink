@@ -4,18 +4,22 @@ import RecipeCard from "./RecipeCard";
 import { useAuth0 } from "@auth0/auth0-react";
 import { CurrentColorContext } from "./CurrentColorContext";
 import Waves from "../assets/wavespng.png";
+import CircularProgress from "@mui/material/CircularProgress";
 
 
 const SavedRecipes = () => {
 
     const { user, isAuthenticated, isLoading } = useAuth0();
     const { savedRecipes, setCurrentColor } = useContext(CurrentColorContext);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         setCurrentColor("#9b99d0");
+        setLoading(false);
     }, [])
 
     return(
+        loading === false ?
         <>
         <StyledImg src={Waves} />
         {savedRecipes &&
@@ -32,6 +36,10 @@ const SavedRecipes = () => {
         }
         <StyledImg2 src={Waves} />
         </>
+        : loading === true &&
+        <LoadingDiv>
+            <CircularProgress />
+        </LoadingDiv>
     )
 }
 
@@ -71,5 +79,11 @@ const StyledImg2 = styled.img`
     right: 0;
     transform:rotate(180deg);
     margin-bottom: -86px;
+`
+const LoadingDiv = styled.div`
+    padding-top: 50vh;
+    height: 50vh;
+    padding-left: 50vw;
+    background-color: var(--color-purple);
 `
 export default SavedRecipes;

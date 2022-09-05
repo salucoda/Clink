@@ -5,12 +5,14 @@ import { useAuth0 } from "@auth0/auth0-react";
 import {CgSmile} from "react-icons/cg";
 import { CurrentColorContext } from "./CurrentColorContext";
 import {IoSparklesSharp} from "react-icons/io5";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const Preferences = () => {
     const { user, isAuthenticated, isLoading } = useAuth0();
     const [confirmed, setConfirmed] = useState(false);
     const [formData, setFormData] = useState({});
     const { setCurrentColor } = useContext(CurrentColorContext);
+    const [loading, setLoading] = useState(null);
 
     useEffect(() => {
         setCurrentColor("#f1a198");
@@ -19,6 +21,7 @@ const Preferences = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         e.stopPropagation();
+        setLoading(true)
 
         const form = {...formData, email: user.email}
 
@@ -30,7 +33,10 @@ const Preferences = () => {
             body: JSON.stringify(form)
         })
         .then((res) => res.json())
-        .then((json) => setConfirmed(true));
+        .then((json) => {
+            setConfirmed(true)
+            setLoading(false)
+        });
     };
 
     const handleChange = (key, value) => {
@@ -113,7 +119,18 @@ const Preferences = () => {
                         ></textarea>
                     </div>
 
-                    <SubmitButton type="submit">update</SubmitButton>
+                    <SubmitButton type="submit">
+                        {loading === false || loading === null ?
+                        <>
+                        update
+                        </>
+                        :
+                        loading === true &&
+                        <>
+                        <CircularProgress size={20}/>
+                        </>
+                        }
+                    </SubmitButton>
                 </div>
             </>
             }

@@ -5,6 +5,7 @@ import {BsSearch} from "react-icons/bs";
 import { NavLink } from "react-router-dom";
 import {CgSmileSad} from "react-icons/cg";
 import {CgSmile} from "react-icons/cg";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const SearchBar = () => {
     const [value, setValue] = useState("");
@@ -14,6 +15,8 @@ const SearchBar = () => {
     const [random, setRandom] = useState(null);
     const [randomDrinks, setRandomDrinks] = useState([]);
     const [searched, setSearched] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [resultLoading, setResultLoading] = useState(true);
 
     let randomIndexes = [];
     let drinks = [];
@@ -32,6 +35,7 @@ const SearchBar = () => {
             .then(response => {
                     console.log(response)
                         setRecipes(response.results)
+                        setResultLoading(false)
             })
             .catch(err => console.error(err));
     }
@@ -57,6 +61,7 @@ const SearchBar = () => {
                 })
                     setRandom(properResponse)
                     console.log("im fetching")
+                    setLoading(false)
             })
             .catch(err => console.error(err));
 
@@ -77,8 +82,6 @@ const SearchBar = () => {
                 })
             }
             setRandomDrinks(drinks)
-            console.log(drinks)
-
         }, [random])
 
     return(
@@ -127,7 +130,12 @@ const SearchBar = () => {
                 <>
                     <p className="drinksTitle">featured drinks</p>
                     <div className="results">
-                        {randomDrinks && randomDrinks.map((recipe) => {
+                        {loading === true ? 
+                        <LoadingDiv>
+                        <CircularProgress/>
+                        </LoadingDiv> 
+                        :
+                        randomDrinks && randomDrinks.map((recipe) => {
                             return(
                                 <>
                                     <RecipeCard name={recipe.name} image={recipe.thumbnail_url} description={recipe.description} id={recipe.id}/>
@@ -138,15 +146,20 @@ const SearchBar = () => {
                 </>
             :
             <div className="results">
-                {recipes && recipes.filter((recipe) => {
-                    return recipe && recipe.sections && recipe.sections.length == 1
-                }).map((recipe) => {
-                    return (
-                            <>
-                                <RecipeCard name={recipe.name} image={recipe.thumbnail_url} description={recipe.description} id={recipe.id}/>
-                            </> 
-                        )
-                })}
+                {resultLoading === true ? 
+                    <LoadingDiv>
+                    <CircularProgress/>
+                    </LoadingDiv> 
+                    :
+                    recipes && recipes.filter((recipe) => {
+                        return recipe && recipe.sections && recipe.sections.length == 1
+                    }).map((recipe) => {
+                        return (
+                                <>
+                                    <RecipeCard name={recipe.name} image={recipe.thumbnail_url} description={recipe.description} id={recipe.id}/>
+                                </> 
+                            )
+                    })}
             </div>
             }
 
@@ -280,5 +293,7 @@ const SideDiv2 = styled.div`
         margin-right: 20px;
     }
 `
-
+const LoadingDiv = styled.div`
+    margin-top: 20vh;
+`
 export default SearchBar;

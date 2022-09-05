@@ -6,6 +6,7 @@ import {GiMartini} from "react-icons/gi";
 import { CurrentColorContext } from "./CurrentColorContext";
 import React from "react";
 import Modal from "react-modal";
+import { CircularProgress } from "@mui/material";
 
 const customStyles = {
     content: {
@@ -63,7 +64,7 @@ const Header = () => {
     }, [isAuthenticated])
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return <div><CircularProgress/></div>;
     }
 
     return(

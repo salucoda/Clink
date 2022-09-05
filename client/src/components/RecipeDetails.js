@@ -3,11 +3,13 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState, useContext} from "react";
 import AddToFavsBtn from "./AddToFavsBtn";
 import { CurrentColorContext } from "./CurrentColorContext";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const RecipeDetails = () => {
     const {recipeId} = useParams();
     const [recipeDeet, setRecipeDeet] = useState();
     const { setCurrentColor } = useContext(CurrentColorContext);
+    const [loading, setLoading] = useState(true);
 
     const options = {
         method: 'GET',
@@ -22,13 +24,15 @@ const RecipeDetails = () => {
         fetch(`https://tasty.p.rapidapi.com/recipes/get-more-info?id=${recipeId}`, options)
             .then(response => response.json())
             .then(response => {
-                setRecipeDeet(response)
+                setRecipeDeet(response);
+                setLoading(false);
             })
             .catch(err => console.error(err));
     }, []);
 
     return(
         recipeDeet &&
+        loading === false ?
         <MainDiv>
             <h1>{recipeDeet.name}</h1>
 
@@ -66,6 +70,10 @@ const RecipeDetails = () => {
                 </ol>
             </div>
         </MainDiv>
+        : loading === true &&
+        <LoadingDiv>
+            <CircularProgress />
+        </LoadingDiv>
     )
 }
 
@@ -77,5 +85,11 @@ const MainDiv = styled.div`
     .img{
         width: 100px;
     }
+`
+const LoadingDiv = styled.div`
+    padding-top: 50vh;
+    height: 50vh;
+    padding-left: 50vw;
+    background-color: var(--color-green);
 `
 export default RecipeDetails;
