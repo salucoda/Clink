@@ -4,6 +4,7 @@ import { useEffect, useState, useContext} from "react";
 import AddToFavsBtn from "./AddToFavsBtn";
 import { CurrentColorContext } from "./CurrentColorContext";
 import CircularProgress from "@mui/material/CircularProgress";
+import Wavy from "../assets/wavy.png";
 
 const RecipeDetails = () => {
     const {recipeId} = useParams();
@@ -33,43 +34,61 @@ const RecipeDetails = () => {
     return(
         recipeDeet &&
         loading === false ?
-        <MainDiv>
-            <h1>{recipeDeet.name}</h1>
+        <>
+            <StyledWave src={Wavy} alt="wavy"/>
+            <StyledWave2 src={Wavy} alt="wavy"/>
 
-            <AddToFavsBtn id={recipeDeet.id} name={recipeDeet.name} image={recipeDeet.thumbnail_url} />
+            <MainDiv>
+                <div className="contentDiv">
+                    <div className="centereddiv">
+                        <h1 className="title">{recipeDeet.name}</h1>
+                    </div>
 
-            <img className="img" src={recipeDeet.thumbnail_url} alt="drink" />
+                    <div className="leftrightcontainer">
+                        <div className="left">
+                            <img className="img" src={recipeDeet.thumbnail_url} alt="drink" />
 
-            <p>Servings: {recipeDeet.num_servings}</p>
+                            <p className="servings"><span className="bold">Servings:</span> {recipeDeet.num_servings}</p>
 
-            <p>{recipeDeet.description}</p>
+                            <p>{recipeDeet.description}</p>
+                            
+                            {/* <AddToFavsBtn id={recipeDeet.id} name={recipeDeet.name} image={recipeDeet.thumbnail_url} /> */}
+                        </div>
 
-            <div className="ingredients">
-                <p>Ingredients:</p>
-                <ul>
-                {recipeDeet.sections[0].components.map((ingredient) => {
-                    return(
-                        <li>
-                            {ingredient.raw_text}
-                        </li>
-                    )
-                })}
-                </ul>
-            </div>
+                        <div className="right">
+                            <div className="ingredients">
+                                <p className="removemargin">Ingredients:</p>
+                                <ul>
+                                {recipeDeet.sections[0].components.map((ingredient) => {
+                                    return(
+                                        <li className="spaceul">
+                                            {ingredient.raw_text}
+                                        </li>
+                                    )
+                                })}
+                                </ul>
+                            </div>
 
-            <div className="instructions">
-                <p>Instructions:</p>
-                <ol>
-                    {recipeDeet.instructions.map((instruction) => {
-                        return(
-                            <li>
-                                {instruction.display_text}
-                            </li>
-                        )
-                    })}
-                </ol>
-            </div>
-        </MainDiv>
+                            <div className="instructions">
+                                <p className="removemargin">Instructions:</p>
+                                <ol>
+                                    {recipeDeet.instructions.map((instruction) => {
+                                        return(
+                                            <li className="spaceol">
+                                                {instruction.display_text}
+                                            </li>
+                                        )
+                                    })}
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="centereddiv">
+                        <AddToFavsBtn id={recipeDeet.id} name={recipeDeet.name} image={recipeDeet.thumbnail_url} />
+                    </div>
+                </div>
+            </MainDiv>
+        </>
         : loading === true &&
         <LoadingDiv>
             <CircularProgress />
@@ -78,12 +97,86 @@ const RecipeDetails = () => {
 }
 
 const MainDiv = styled.div`
-    padding-top: 15vh;
+    /* padding-top: 4vh; */
     background-color: var(--color-green);
-    height: 85vh;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: var(--font-body);
 
     .img{
-        width: 100px;
+        width: 400px;
+        height: 400px;
+        border: 3px solid black;
+        border-radius: 30px;
+    }
+    
+    .contentDiv{
+        /* padding-top: 10.5vh; */
+        /* height: 89.5vh; */
+        width: 1000px;
+        margin-top: 50px;
+        /* border: solid black 1px; */
+        background-color: var(--color-green);
+        z-index: 50;
+    }
+    
+    .centereddiv{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .left{
+        /* border: solid blue 1px; */
+    }
+
+    .right{
+        padding-left: 50px;
+        /* border: solid yellow 1px; */
+        /* padding-top: 15px; */
+    }
+
+    .leftrightcontainer{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto auto auto;
+        /* border: solid 2px red; */
+        margin-left: 50px;
+        
+    }
+
+    .title{
+        font-family: var(--font-header-option-two);
+        margin-top: 20px;
+        margin-bottom: 30px;
+    }
+
+    .removemargin{
+        margin-left: -50px;
+        margin-bottom: 10px;
+        margin-top: 10px;
+        font-weight: bold;
+        text-decoration: underline;
+    }
+
+    .spaceul{
+        /* margin-bottom: 4px; */
+    }
+
+    .spaceol{
+        margin-bottom: 10px;
+    }
+
+    .bold{
+        font-weight: bold;
+        text-decoration: underline;
+    }
+
+    .servings{
+        margin-top: 10px;
+        margin-bottom: 10px;
     }
 `
 const LoadingDiv = styled.div`
@@ -91,5 +184,21 @@ const LoadingDiv = styled.div`
     height: 50vh;
     padding-left: 50vw;
     background-color: var(--color-green);
+`
+const StyledWave = styled.img`
+    margin-top: 300px;
+    margin-left: -350px;
+    transform:rotate(90deg);
+    height: 400px;
+    width: 1100px;
+    position: fixed;
+`
+const StyledWave2 = styled.img`
+    margin-top: 320px;
+    margin-left: 1170px;
+    transform:rotate(270deg);
+    height: 400px;
+    width: 1100px;
+    position: fixed;
 `
 export default RecipeDetails;

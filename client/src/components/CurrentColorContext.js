@@ -24,7 +24,6 @@ export const CurrentColorProvider = ({ children }) => {
             })
             .then(res => res.json())
             .then(data => {
-                console.log(data.data)
                 setSavedRecipes(data.data)
             })
         }

@@ -3,22 +3,20 @@ import { useEffect, useState, useContext } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { CurrentColorContext } from "./CurrentColorContext";
 import { useHistory } from "react-router-dom";
+import { CircularProgress } from "@mui/material";
 
 const AddToFavsBtn = ({ id, name, image }) => {
-
+    const [loadingBtnAdd, setLoadingBtnAdd] = useState(false)
+    const [loadingBtnRemove, setLoadingBtnRemove] = useState(false)
     const { user, isAuthenticated, isLoading } = useAuth0();
     const { savedRecipes, toggleFavs, setToggleFavs } = useContext(CurrentColorContext);
-
-    console.log(savedRecipes)
-    console.log(id)
 
     const existingRecipe = savedRecipes.filter((recipe) => {
         return recipe.id === id
     })
-    console.log(existingRecipe);
 
     const addToFav = () => {
-        
+        setLoadingBtnRemove(false)
         fetch("/add-recipe", {
             method: "POST",
             headers: {
@@ -29,13 +27,13 @@ const AddToFavsBtn = ({ id, name, image }) => {
         .then((res) => res.json())
         .then(data => {
             setToggleFavs(!toggleFavs)
-            console.log(data)
+            setLoadingBtnAdd(true)
         })
         .catch(err => console.log(err))
-
     }
 
     const removeFromFav = () => {
+        setLoadingBtnAdd(false)
         fetch(`/remove-recipe/${id}`, {
             method: "DELETE",
             headers: {
@@ -46,7 +44,7 @@ const AddToFavsBtn = ({ id, name, image }) => {
         .then((res) => res.json())
         .then(data => {
             setToggleFavs(!toggleFavs)
-            console.log(data)
+            setLoadingBtnRemove(true)
         })
         .catch(err => console.log(err))
     }
@@ -54,18 +52,51 @@ const AddToFavsBtn = ({ id, name, image }) => {
     return (
         <>
         {isAuthenticated &&
-
         existingRecipe.length ?
         
-        <button onClick={removeFromFav}>Remove from Favorites</button>
+        <StyledBtn onClick={removeFromFav}>
+            {loadingBtnRemove === true ?
+            <>
+            <CircularProgress size={20}/>
+            </>
+            :
+            <>
+            remove from favs
+            </>}
+        </StyledBtn>
         :
-        
         isAuthenticated &&
-        
-        <button onClick={addToFav}>Add to Favorites</button>
+
+        <StyledBtn onClick={addToFav}>
+            {loadingBtnAdd === true ?
+            <>
+            <CircularProgress size={20}/>
+            </>
+            :
+            <>
+            add to favs
+            </>}
+        </StyledBtn>
         }
         </>
     )
 }
 
+const StyledBtn = styled.button`
+    margin-top: 20px;
+    width: 150px;
+    height: 35px;
+    font-family: var(--font-body);
+    border-radius: 30px;
+    font-weight: bold;
+    background-color: black;
+    color: var(--color-green);
+    
+    &:hover{
+        background-color: var(--color-green);
+        color: black;
+        border: solid 2px black;
+        cursor: pointer;
+    }
+`
 export default AddToFavsBtn;
